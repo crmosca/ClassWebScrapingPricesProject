@@ -33,17 +33,25 @@ def scrape_prices_and_details(url, site_name):
         print(f"No prices found for '{search_term}' on {site_name.capitalization()}.")
     
     else:
-        #print and save data to a .csv 
-        with open(f'data/raw_data/{search_term}_prices.csv', 'w', newline='', encoding='utf-8') as csv_file:
-        csv_writer = csv.writer(csv_file)
-        csv_writer.writerow(['Listing Name', 'Price', 'Brand'])
+        #store details in a dataframe with pandas
+        data = {'Listing Name': [], 'Price': [], 'Brand': []}
         
         for listing, price, brand in zip(listings, prices, brands):
             listing_name=listing.get.text(strip=True) if 'ebay' in site_name else listing.get_text(strip=True) if 'amazon' in site_name else listing.get_text(strip=True)
             price_text = price.get_text(strip=True)
             brand_name = brand.get_text(strip=True) if 'ebay' in site_name else brand.get_text(strip=True) if 'amazon' in site_name else brand.get_text(strip=True)
+            
+            data['Listing Name'].append(listing_name)
+            data['Price'].append(price_text)
+            data['Brand'].append(brand_name)
+            
             print(f"Listing: {listing_name}, Price: {price_text}, Brand: {brand_name}")
-            csv_writer.writerow([listing_name, price_text, brand_name])
+        
+        #create dataframe
+        df = pd.DataFrame(data)
+        
+        #save the dataframe to a csv file
+        df.to_csv(f'data/raw_data/{search_term}_{site_name}_details.csv', index=False, encoding='utf-8')
 
 #create a way to deal with possible issues            
 except requests.RequestException as e:
