@@ -68,3 +68,8 @@ scrape_prices_and_details(amazon_url, 'amazon')
 
 #scrape prices for google shopping
 scrape_prices_and_details(google_shopping_url, 'google_shopping')
+
+#store the search term in the CSV file as metadata
+with open(f'data/raw_data/{search_term}_ebay_details.csv', 'a', newline'', encoding='utf-8') as csv_file:
+    csv_writer = csv.writer(csv_file)
+    csv_writer.writerow(['SearchTerm', search_term])
