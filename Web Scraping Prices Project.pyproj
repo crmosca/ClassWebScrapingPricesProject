@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="scripts\data_analysis.py" />
     <Compile Include="scripts\web_scraper.py" />
+    <Compile Include="visualizations\visualizing_data.py" />
     <Compile Include="Web_Scraping_Prices_Project.py" />
   </ItemGroup>
   <ItemGroup>
