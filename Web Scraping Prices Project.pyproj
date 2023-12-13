@@ -22,12 +22,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="scripts\data_analysis.py" />
+    <Compile Include="scripts\fetch_html_debug.py" />
     <Compile Include="scripts\web_scraper.py" />
     <Compile Include="visualizations\visualizing_data.py" />
     <Compile Include="Web_Scraping_Prices_Project.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
+    <Folder Include="data\raw_data\" />
     <Folder Include="visualizations\" />
     <Folder Include="scripts\" />
   </ItemGroup>
