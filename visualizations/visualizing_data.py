@@ -31,12 +31,13 @@ plt.title('Boxplot of Prices for eBay Data')
 plt.xticks(rotation=90)
 plt.show()
 
-# Creating a histogram for Prices
-plt.figure(figsize=(10, 6))
-sns.histplot(ebay_data['Prices'], bins=30, kde=True)
-plt.title('Histogram of Prices')
-plt.xlabel('Prices')
-plt.ylabel('Frequency')
+# Creating a violin plot for Prices with Listing Names
+plt.figure(figsize=(12, 6))
+sns.violinplot(x='Listing Names', y='Prices', data=ebay_data, inner='quartile', cut=0)
+plt.title('Violin Plot of Prices for eBay Data')
+plt.xticks(rotation=90)
+plt.xlabel('Listing Names')
+plt.ylabel('Prices')
 plt.show()
 
 # Creating a FacetGrid of KDE plots for each Listing Name
