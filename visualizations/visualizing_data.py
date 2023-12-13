@@ -3,25 +3,21 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# first load the data from the CSV files
-ebay_data = pd.read_csv('../data/raw_data/<your_search_term>_ebay_details.csv')
-amazon_data = pd.read_csv('../data/raw_data/<your_search_term>_amazon_details.csv')
-google_shopping_data = pd.read_csv('../data/raw_data/<your_search_term>_google_shopping_details.csv')
+# Load the data from the CSV file
+ebay_data = pd.read_csv('../data/raw_data/<your_search_term>_ebay_prices_and_names.csv')
 
-# then concatenate the data from different sources into a single DataFrame
-all_data = pd.concat([ebay_data, amazon_data, google_shopping_data], ignore_index=True)
+# Convert 'Prices' column to numeric
+ebay_data['Prices'] = ebay_data['Prices'].replace('[\$,]', '', regex=True).astype(float)
 
-# convert 'price' column to numeric
-all_data['Price'] = all_data['Price'].replace('[\$,]', '', regex=True).astype(float)
-
-# Create a boxplot for overall data
+# Creating a boxplot for eBay data
 plt.figure(figsize=(10, 6))
-sns.boxplot(x='Source', y='Price', data=all_data)
-plt.title('Boxplot of Prices for Overall Data')
+sns.boxplot(x='Source', y='Prices', data=ebay_data)
+plt.title('Boxplot of Prices for eBay Data')
 plt.show()
 
-# Create separate boxplots for each website
+# Creating a boxplot for each listing
 plt.figure(figsize=(15, 8))
-sns.boxplot(x='Brand', y='Price', hue='Source', data=all_data)
-plt.title('Boxplot of Prices for Each Brand and Source')
+sns.boxplot(x='Listing Names', y='Prices', data=ebay_data)
+plt.title('Boxplot of Prices for Each Listing on eBay')
+plt.xticks(rotation=90)
 plt.show()

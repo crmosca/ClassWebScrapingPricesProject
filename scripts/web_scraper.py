@@ -7,7 +7,7 @@ import os
 import re
 
 def clean_filename(filename):
-    # Remove invalid characters from the filename
+    #removing invalid characters from the filename
     return re.sub(r'[<>:"/\\|?*]', '', filename)
 
 async def scrape_ebay_prices_and_names(search_term):
@@ -18,14 +18,14 @@ async def scrape_ebay_prices_and_names(search_term):
         response.raise_for_status()
         soup = BeautifulSoup(response.text, 'html.parser')
 
-        # Find all elements with class 's-item__info'
+        #finding all elements with class 's-item__info'
         item_elements = soup.find_all('div', class_='s-item__info')
 
         if not item_elements:
             print(f"No items found for '{search_term}' on eBay.")
             return
 
-        # Extract and log the item listing names and prices
+        #extracting and log the item listing names and prices
         data = []
         for index, item in enumerate(item_elements, start=1):
             title_element = item.find("div", class_="s-item__title")
@@ -37,19 +37,19 @@ async def scrape_ebay_prices_and_names(search_term):
             data.append((name, price))
             print(f"Item {index} Listing Name: {name} | Price: {price}")
 
-        # Get the absolute path for the CSV file
+        #getting the absolute path for the CSV file
         directory = 'data/raw_data/'
         os.makedirs(directory, exist_ok=True)
         filename = clean_filename(f'{search_term}_ebay_prices_and_names.csv')
         csv_path = os.path.join(directory, filename)
 
-        # Save names and prices to CSV
+        #saving names and prices to CSV
         df = pd.DataFrame(data, columns=['Listing Names', 'Prices'])
         df.to_csv(csv_path, index=False, encoding='utf-8')
         print(f"Listing names and prices saved to {csv_path}")
 
 if __name__ == "__main__":
-    # Get user input for the search term
+    #getting user input for the search term
     search_term = input("Enter the product name that you want to search for on eBay: ")
 
     try:
